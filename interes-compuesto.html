@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de interés compuesto: cuánto crece tu dinero | CalcuPlata</title>
+<meta name="description" content="Calcula cuánto crece tu dinero con interés compuesto, con aportes mensuales y una tabla año por año. Gratis y sin registro.">
+<style>
+:root{--ink:#14213d;--verde:#1a7f5a;--ambar:#e8a33d;--papel:#f3f5f8;--linea:#d9dee7;--mu:#5b6578}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--papel);color:var(--ink);line-height:1.55}
+.cab{background:var(--ink);color:#fff;padding:20px 16px 30px}
+.cab .in,.cont{max-width:980px;margin:0 auto}
+.marca{font-weight:700;opacity:.9;margin-bottom:20px}
+h1{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:2rem;line-height:1.15;margin:0 0 8px}
+.cab p{margin:0;max-width:520px;color:#cbd5e1}
+.cont{padding:20px 16px 24px}
+.grid{display:grid;gap:20px}
+@media(min-width:840px){.grid{grid-template-columns:1fr 1.15fr;align-items:start}}
+.datos,.res{background:#fff;border:1px solid var(--linea);border-radius:8px;padding:20px}
+.res{border-top:4px solid var(--verde)}
+h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.25rem;margin:0 0 10px}
+label{display:block;font-size:.88rem;font-weight:600;margin:16px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #b8c0cf;border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--ambar);outline-offset:1px}
+.mon{display:grid;grid-template-columns:140px 1fr;gap:10px}
+.dos{display:grid;grid-template-columns:1.4fr 1fr;gap:10px}
+#error{color:#8a1c1c;background:#fdecec;border-left:4px solid #c0392b;padding:10px 12px;margin-top:14px;border-radius:4px}
+.nota{font-size:.84rem;color:var(--mu);margin:14px 0 0}
+.etq{font-size:.9rem;color:var(--mu)}
+.cuota{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:2.7rem;line-height:1.1;color:var(--verde);font-variant-numeric:tabular-nums;margin:2px 0 18px;overflow-wrap:anywhere}
+dl{margin:0 0 16px}
+.fila{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--linea)}
+.fila dt{color:var(--mu)}
+.fila dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+.barra{display:flex;height:12px;border-radius:2px;overflow:hidden;background:var(--linea)}
+.barra i{display:block;height:100%}
+.leyenda{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;color:var(--mu);margin-top:8px}
+.pto{display:inline-block;width:10px;height:10px;margin-right:5px;border-radius:2px}
+.txt{border-top:1px solid var(--linea);margin-top:28px;padding-top:22px}
+.txt p,.txt li{color:#334155;max-width:70ch}
+.tabla{max-height:340px;overflow:auto;border:1px solid var(--linea);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:520px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--linea)}
+tbody tr:nth-child(even){background:#f8fafc}
+th{position:sticky;top:0;background:#e9edf3}
+th:first-child,td:first-child{text-align:center}
+code{background:#e9edf3;padding:2px 6px;border-radius:4px}
+details{border-bottom:1px solid var(--linea);padding:12px 0;max-width:70ch}
+summary{cursor:pointer;font-weight:600}
+details p{margin:8px 0 0}
+footer{text-align:center;color:var(--mu);font-size:.84rem;padding:8px 16px 30px;max-width:70ch;margin:0 auto}
+.marca{margin-bottom:12px}
+.menu{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.menu a{color:#cbd5e1;text-decoration:none;padding:6px 14px;border:1px solid #3b4a6b;border-radius:999px;font-size:.9rem}
+.menu a:hover{border-color:#fff;color:#fff}
+.menu a[aria-current=page]{background:#fff;color:var(--ink);border-color:#fff;font-weight:600}
+.rp{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.7rem;color:var(--verde);font-variant-numeric:tabular-nums;margin-top:14px;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<header class="cab"><div class="in">
+  <div class="marca"><a href="index.html" style="color:inherit;text-decoration:none">CalcuPlata</a></div>
+  <nav class="menu" aria-label="Herramientas"><a href="calculadora-prestamos.html">Préstamos</a><a href="calculadora-ahorro.html">Ahorro</a><a href="interes-compuesto.html" aria-current="page">Interés compuesto</a><a href="calculadora-porcentajes.html">Porcentajes</a></nav>
+  <h1>Calculadora de interés compuesto</h1>
+  <p>Mira cuánto puede crecer tu dinero con el tiempo, año por año.</p>
+</div></header>
+<main class="cont">
+  <div class="grid">
+    <section class="datos">
+      <h2>Tu inversión</h2>
+      <div class="mon">
+        <div><label for="moneda">Moneda</label><select id="moneda" aria-label="Moneda"><option value="$">$ Dólar/Peso</option><option value="€">€ Euro</option><option value="S/">S/ Sol</option><option value="Bs">Bs Boliviano</option><option value="Bs.">Bs. Bolívar</option><option value="R$">R$ Real</option><option value="Q">Q Quetzal</option><option value="L">L Lempira</option><option value="₡">₡ Colón</option><option value="C$">C$ Córdoba</option><option value="₲">₲ Guaraní</option><option value="RD$">RD$ Peso dom.</option><option value="$U">$U Peso uru.</option><option value="£">£ Libra</option><option value="">Sin símbolo</option></select></div>
+        <div><label for="inicial">Capital inicial</label><input id="inicial" type="number" inputmode="decimal" min="0" step="any" value="1000"></div>
+      </div>
+      <label for="aporte">Aporte cada mes</label>
+      <input id="aporte" type="number" inputmode="decimal" min="0" step="any" value="100">
+      <label for="tasa">Rendimiento anual (%)</label>
+      <input id="tasa" type="number" inputmode="decimal" min="0" step="any" value="6">
+      <label for="plazo">Tiempo</label>
+      <div class="dos"><input id="plazo" type="number" inputmode="numeric" min="1" step="1" value="10"><select id="unidad" aria-label="Unidad del tiempo"><option value="anios">Años</option><option value="meses">Meses</option></select></div>
+      <div id="error" role="alert" hidden></div>
+      <p class="nota">El aporte se suma al final de cada mes. El rendimiento real puede variar y no está garantizado.</p>
+    </section>
+    <section class="res" aria-live="polite">
+      <h2>Tu resultado</h2>
+      <div class="etq">Dinero acumulado al final</div>
+      <div class="cuota" id="cuota">–</div>
+      <dl>
+        <div class="fila"><dt>Lo que pusiste en total</dt><dd id="aportado">–</dd></div>
+        <div class="fila"><dt>Intereses ganados</dt><dd id="ganado">–</dd></div>
+        <div class="fila"><dt>Número de meses</dt><dd id="ncuotas">–</dd></div>
+      </dl>
+      <div class="barra"><i id="bcap" style="background:var(--verde)"></i><i id="bint" style="background:var(--ambar)"></i></div>
+      <div class="leyenda"><span><span class="pto" style="background:var(--verde)"></span>Lo que pusiste <b id="pcap"></b></span><span><span class="pto" style="background:var(--ambar)"></span>Lo que ganaste <b id="pint"></b></span></div>
+      <!-- ESPACIO PARA PUBLICIDAD: pega aquí el código de anuncio de tu red de anuncios (por ejemplo Google AdSense) -->
+      <div id="espacio-publicidad" style="margin-top:18px"></div>
+    </section>
+  </div>
+  <section class="txt">
+    <h2>Crecimiento año por año</h2>
+    <div class="tabla"><table><thead><tr><th>Año</th><th>Aportado</th><th>Intereses</th><th>Total</th></tr></thead><tbody id="filas"></tbody></table></div>
+  </section>
+  <section class="txt">
+    <h2>¿Qué es el interés compuesto?</h2>
+    <p>Es ganar intereses sobre los intereses. Cada mes, lo que ganaste se suma a tu dinero, y al mes siguiente ese total también gana. Por eso el crecimiento se acelera con los años. La calculadora repite cada mes esta cuenta: <code>saldo = saldo × (1 + i) + aporte</code>, donde <b>i</b> es el rendimiento anual dividido entre 12.</p>
+  </section>
+  <section class="txt">
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Cuál es la diferencia con el interés simple?</summary><p>El simple solo se calcula sobre el dinero inicial. El compuesto se calcula sobre el dinero inicial más los intereses acumulados, y por eso crece más.</p></details>
+    <details><summary>¿Qué rendimiento debo escribir?</summary><p>El que informa tu banco o plataforma, en porcentaje anual. Los rendimientos reales cambian, así que úsalo como una estimación y no como una promesa.</p></details>
+    <details><summary>¿Importa empezar temprano?</summary><p>Mucho. Con el mismo aporte mensual, más años significa más intereses ganando intereses. Cambia el tiempo en la calculadora y compáralo.</p></details>
+  </section>
+</main>
+<footer>Los resultados son estimados con fines informativos y no constituyen asesoría financiera ni una recomendación de inversión. © CalcuPlata</footer>
+<script>
+function $(i){return document.getElementById(i);}
+function num(i){var v=parseFloat($(i).value);return isFinite(v)?v:NaN;}
+function nf(x){return x.toLocaleString('es',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function mf(x){var m=$('moneda'),s=m?m.value.trim():'';return (s?s+' ':'')+nf(x);}
+function meses(){return Math.round($('unidad').value==='anios'?num('plazo')*12:num('plazo'));}
+function limpiar(m,ids){$('error').textContent=m;$('error').hidden=false;ids.forEach(function(i){$(i).textContent='–';});}
+function calcular(){
+  var P=num('inicial'),A=num('aporte'),T=num('tasa'),n=meses(),ids=['cuota','aportado','ganado','ncuotas'];
+  if(!(P>=0)||!(A>=0)||!(T>=0)||!(n>0)||(P+A)<=0){limpiar('Revisa los datos: escribe un capital o un aporte mayor que cero y un tiempo mayor que cero.',ids);$('filas').innerHTML='';return;}
+  if(n>600){limpiar('El tiempo máximo es de 50 años (600 meses).',ids);$('filas').innerHTML='';return;}
+  $('error').hidden=true;
+  var r=T/1200,b=P,ap=P,h=[];
+  for(var i=1;i<=n;i++){
+    b=b*(1+r)+A;ap+=A;
+    if(i%12===0||i===n){h.push('<tr><td>'+(i%12===0?i/12:(i/12).toFixed(1))+'</td><td>'+nf(ap)+'</td><td>'+nf(b-ap)+'</td><td>'+nf(b)+'</td></tr>');}
+  }
+  var pc=ap/b*100;
+  $('cuota').textContent=mf(b);$('aportado').textContent=mf(ap);$('ganado').textContent=mf(b-ap);$('ncuotas').textContent=n;
+  $('bcap').style.width=pc+'%';$('bint').style.width=(100-pc)+'%';$('pcap').textContent=pc.toFixed(0)+'%';$('pint').textContent=(100-pc).toFixed(0)+'%';
+  $('filas').innerHTML=h.join('');
+}
+['inicial','aporte','tasa','plazo','unidad','moneda'].forEach(function(i){$(i).addEventListener('input',calcular);});
+calcular();
+</script>
+</body>
+</html>

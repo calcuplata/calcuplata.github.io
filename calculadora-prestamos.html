@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de préstamos: calcula tu cuota mensual gratis | CalcuPlata</title>
+<meta name="description" content="Calcula gratis la cuota mensual de tu préstamo o crédito, el total de intereses y la tabla de pagos mes a mes. Sin registro y sin guardar tus datos.">
+<style>
+:root{--ink:#14213d;--verde:#1a7f5a;--ambar:#e8a33d;--papel:#f3f5f8;--linea:#d9dee7;--mu:#5b6578}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--papel);color:var(--ink);line-height:1.55}
+.cab{background:var(--ink);color:#fff;padding:20px 16px 30px}
+.cab .in,.cont{max-width:980px;margin:0 auto}
+.marca{font-weight:700;opacity:.9;margin-bottom:20px}
+h1{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:2rem;line-height:1.15;margin:0 0 8px}
+.cab p{margin:0;max-width:520px;color:#cbd5e1}
+.cont{padding:20px 16px 24px}
+.grid{display:grid;gap:20px}
+@media(min-width:840px){.grid{grid-template-columns:1fr 1.15fr;align-items:start}}
+.datos,.res{background:#fff;border:1px solid var(--linea);border-radius:8px;padding:20px}
+.res{border-top:4px solid var(--verde)}
+h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.25rem;margin:0 0 10px}
+label{display:block;font-size:.88rem;font-weight:600;margin:16px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #b8c0cf;border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--ambar);outline-offset:1px}
+.mon{display:grid;grid-template-columns:140px 1fr;gap:10px}
+.dos{display:grid;grid-template-columns:1.4fr 1fr;gap:10px}
+#error{color:#8a1c1c;background:#fdecec;border-left:4px solid #c0392b;padding:10px 12px;margin-top:14px;border-radius:4px}
+.nota{font-size:.84rem;color:var(--mu);margin:14px 0 0}
+.etq{font-size:.9rem;color:var(--mu)}
+.cuota{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:2.7rem;line-height:1.1;color:var(--verde);font-variant-numeric:tabular-nums;margin:2px 0 18px;overflow-wrap:anywhere}
+dl{margin:0 0 16px}
+.fila{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--linea)}
+.fila dt{color:var(--mu)}
+.fila dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+.barra{display:flex;height:12px;border-radius:2px;overflow:hidden;background:var(--linea)}
+.barra i{display:block;height:100%}
+.leyenda{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;color:var(--mu);margin-top:8px}
+.pto{display:inline-block;width:10px;height:10px;margin-right:5px;border-radius:2px}
+.txt{border-top:1px solid var(--linea);margin-top:28px;padding-top:22px}
+.txt p,.txt li{color:#334155;max-width:70ch}
+.tabla{max-height:340px;overflow:auto;border:1px solid var(--linea);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:520px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--linea)}
+tbody tr:nth-child(even){background:#f8fafc}
+th{position:sticky;top:0;background:#e9edf3}
+th:first-child,td:first-child{text-align:center}
+code{background:#e9edf3;padding:2px 6px;border-radius:4px}
+details{border-bottom:1px solid var(--linea);padding:12px 0;max-width:70ch}
+summary{cursor:pointer;font-weight:600}
+details p{margin:8px 0 0}
+footer{text-align:center;color:var(--mu);font-size:.84rem;padding:8px 16px 30px;max-width:70ch;margin:0 auto}
+.marca{margin-bottom:12px}
+.menu{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.menu a{color:#cbd5e1;text-decoration:none;padding:6px 14px;border:1px solid #3b4a6b;border-radius:999px;font-size:.9rem}
+.menu a:hover{border-color:#fff;color:#fff}
+.menu a[aria-current=page]{background:#fff;color:var(--ink);border-color:#fff;font-weight:600}
+.rp{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.7rem;color:var(--verde);font-variant-numeric:tabular-nums;margin-top:14px;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<header class="cab"><div class="in">
+  <div class="marca"><a href="index.html" style="color:inherit;text-decoration:none">CalcuPlata</a></div>
+  <nav class="menu" aria-label="Herramientas"><a href="calculadora-prestamos.html" aria-current="page">Préstamos</a><a href="calculadora-ahorro.html">Ahorro</a><a href="interes-compuesto.html">Interés compuesto</a><a href="calculadora-porcentajes.html">Porcentajes</a></nav>
+  <h1>Calculadora de préstamos</h1>
+  <p>Calcula tu cuota mensual, cuánto pagas de intereses y cómo se reparte cada pago. Gratis y sin registro.</p>
+</div></header>
+<main class="cont">
+  <div class="grid">
+    <section class="datos">
+      <h2>Datos del préstamo</h2>
+      <div class="mon">
+        <div><label for="moneda">Moneda</label><select id="moneda" aria-label="Moneda"><option value="$">$ Dólar/Peso</option><option value="€">€ Euro</option><option value="S/">S/ Sol</option><option value="Bs">Bs Boliviano</option><option value="Bs.">Bs. Bolívar</option><option value="R$">R$ Real</option><option value="Q">Q Quetzal</option><option value="L">L Lempira</option><option value="₡">₡ Colón</option><option value="C$">C$ Córdoba</option><option value="₲">₲ Guaraní</option><option value="RD$">RD$ Peso dom.</option><option value="$U">$U Peso uru.</option><option value="£">£ Libra</option><option value="">Sin símbolo</option></select></div>
+        <div><label for="monto">Monto que necesitas</label><input id="monto" type="number" inputmode="decimal" min="0" step="any" value="10000"></div>
+      </div>
+      <label for="tasa">Tasa de interés anual (%)</label>
+      <input id="tasa" type="number" inputmode="decimal" min="0" step="any" value="12">
+      <label for="plazo">Plazo para pagar</label>
+      <div class="dos">
+        <input id="plazo" type="number" inputmode="numeric" min="1" step="1" value="24">
+        <select id="unidad" aria-label="Unidad del plazo"><option value="meses">Meses</option><option value="anios">Años</option></select>
+      </div>
+      <div id="error" role="alert" hidden></div>
+      <p class="nota">Usa la tasa efectiva anual que te informa tu banco. El cálculo supone cuotas fijas todos los meses.</p>
+    </section>
+    <section class="res" aria-live="polite">
+      <h2>Tu resultado</h2>
+      <div class="etq">Cuota mensual</div>
+      <div class="cuota" id="cuota">–</div>
+      <dl>
+        <div class="fila"><dt>Total a pagar</dt><dd id="total">–</dd></div>
+        <div class="fila"><dt>Total de intereses</dt><dd id="inter">–</dd></div>
+        <div class="fila"><dt>Número de cuotas</dt><dd id="ncuotas">–</dd></div>
+      </dl>
+      <div class="barra"><i id="bcap" style="background:var(--verde)"></i><i id="bint" style="background:var(--ambar)"></i></div>
+      <div class="leyenda">
+        <span><span class="pto" style="background:var(--verde)"></span>Capital <b id="pcap"></b></span>
+        <span><span class="pto" style="background:var(--ambar)"></span>Intereses <b id="pint"></b></span>
+      </div>
+      <!-- ESPACIO PARA PUBLICIDAD: pega aquí el código de anuncio de tu red de anuncios (por ejemplo Google AdSense) -->
+      <div id="espacio-publicidad" style="margin-top:18px"></div>
+    </section>
+  </div>
+
+  <section class="txt">
+    <h2>Tabla de pagos mes a mes</h2>
+    <p>Cada cuota se divide en capital, que reduce lo que debes, e intereses, que es el costo del préstamo.</p>
+    <div class="tabla"><table>
+      <thead><tr><th>Mes</th><th>Cuota</th><th>Capital</th><th>Intereses</th><th>Saldo</th></tr></thead>
+      <tbody id="filas"></tbody>
+    </table></div>
+  </section>
+
+  <section class="txt">
+    <h2>¿Cómo se calcula la cuota?</h2>
+    <p>La calculadora usa el sistema de cuota fija, el más común en los créditos de consumo, de vehículo y de vivienda:</p>
+    <p><code>cuota = monto × i ÷ (1 − (1 + i)<sup>−n</sup>)</code></p>
+    <p>Aquí <b>i</b> es la tasa mensual, que sale de dividir la tasa anual entre 12, y <b>n</b> es el número de cuotas. Al principio gran parte de cada cuota se va en intereses, y con los meses pagas cada vez más capital.</p>
+  </section>
+
+  <section class="txt">
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Qué tasa debo escribir?</summary><p>La tasa anual que aparece en la oferta de tu banco. Si tienes varias, usa la efectiva anual, que ya incluye la capitalización de intereses.</p></details>
+    <details><summary>¿El resultado incluye seguros y comisiones?</summary><p>No. Los seguros, comisiones y otros cobros se suman aparte, así que tu cuota real puede ser mayor. Pregunta por el costo total.</p></details>
+    <details><summary>¿Sirve para un crédito de auto o de vivienda?</summary><p>Sí, siempre que la cuota sea fija. No sirve para créditos con tasa variable, porque ahí la cuota cambia con el tiempo.</p></details>
+    <details><summary>¿Se guardan mis datos?</summary><p>No. Todo el cálculo se hace en tu navegador y no enviamos nada a ningún servidor.</p></details>
+  </section>
+</main>
+<footer>Los resultados son estimados con fines informativos y no constituyen asesoría financiera ni una oferta de crédito. Confirma las condiciones con tu entidad antes de decidir. © CalcuPlata</footer>
+<script>
+function $(i){return document.getElementById(i);}
+function nf(x){return x.toLocaleString('es',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function mf(x){var s=$('moneda').value.trim();return (s?s+' ':'')+nf(x);}
+function limpiar(msg){
+  $('error').textContent=msg;$('error').hidden=false;
+  ['cuota','total','inter','ncuotas'].forEach(function(i){$(i).textContent='–';});
+  $('pcap').textContent='';$('pint').textContent='';$('bcap').style.width='0';$('bint').style.width='0';$('filas').innerHTML='';
+}
+function calcular(){
+  var P=parseFloat($('monto').value),T=parseFloat($('tasa').value),pl=parseFloat($('plazo').value);
+  var n=Math.round($('unidad').value==='anios'?pl*12:pl);
+  if(!(P>0)||!(T>=0)||!(n>0)){limpiar('Revisa los datos: el monto y el plazo deben ser mayores que cero, y la tasa no puede ser negativa.');return;}
+  if(n>600){limpiar('El plazo máximo es de 50 años (600 meses).');return;}
+  $('error').hidden=true;
+  var r=T/1200,cuota=r===0?P/n:P*r/(1-Math.pow(1+r,-n)),total=cuota*n,inter=total-P,pc=P/total*100;
+  $('cuota').textContent=mf(cuota);$('total').textContent=mf(total);$('inter').textContent=mf(inter);$('ncuotas').textContent=n;
+  $('bcap').style.width=pc+'%';$('bint').style.width=(100-pc)+'%';
+  $('pcap').textContent=pc.toFixed(0)+'%';$('pint').textContent=(100-pc).toFixed(0)+'%';
+  var s=P,h=[];
+  for(var i=1;i<=n;i++){
+    var it=s*r,cap=cuota-it;s=i===n?0:Math.max(s-cap,0);
+    h.push('<tr><td>'+i+'</td><td>'+nf(cuota)+'</td><td>'+nf(cap)+'</td><td>'+nf(it)+'</td><td>'+nf(s)+'</td></tr>');
+  }
+  $('filas').innerHTML=h.join('');
+}
+['monto','tasa','plazo','unidad','moneda'].forEach(function(i){$(i).addEventListener('input',calcular);});
+calcular();
+</script>
+</body>
+</html>

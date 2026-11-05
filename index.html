@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CalcuPlata: calculadoras de dinero gratis</title>
+<meta name="description" content="Calculadoras gratis para tu dinero: cuota de préstamos, ahorro para una meta, interés compuesto y porcentajes. Sin registro y sin guardar tus datos.">
+<style>
+:root{--ink:#14213d;--verde:#1a7f5a;--ambar:#e8a33d;--papel:#f3f5f8;--linea:#d9dee7;--mu:#5b6578}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--papel);color:var(--ink);line-height:1.55}
+.cab{background:var(--ink);color:#fff;padding:20px 16px 30px}
+.cab .in,.cont{max-width:980px;margin:0 auto}
+.marca{font-weight:700;opacity:.9;margin-bottom:20px}
+h1{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:2rem;line-height:1.15;margin:0 0 8px}
+.cab p{margin:0;max-width:520px;color:#cbd5e1}
+.cont{padding:20px 16px 24px}
+.grid{display:grid;gap:20px}
+@media(min-width:840px){.grid{grid-template-columns:1fr 1.15fr;align-items:start}}
+.datos,.res{background:#fff;border:1px solid var(--linea);border-radius:8px;padding:20px}
+.res{border-top:4px solid var(--verde)}
+h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.25rem;margin:0 0 10px}
+label{display:block;font-size:.88rem;font-weight:600;margin:16px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #b8c0cf;border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--ambar);outline-offset:1px}
+.mon{display:grid;grid-template-columns:140px 1fr;gap:10px}
+.dos{display:grid;grid-template-columns:1.4fr 1fr;gap:10px}
+#error{color:#8a1c1c;background:#fdecec;border-left:4px solid #c0392b;padding:10px 12px;margin-top:14px;border-radius:4px}
+.nota{font-size:.84rem;color:var(--mu);margin:14px 0 0}
+.etq{font-size:.9rem;color:var(--mu)}
+.cuota{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:2.7rem;line-height:1.1;color:var(--verde);font-variant-numeric:tabular-nums;margin:2px 0 18px;overflow-wrap:anywhere}
+dl{margin:0 0 16px}
+.fila{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--linea)}
+.fila dt{color:var(--mu)}
+.fila dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+.barra{display:flex;height:12px;border-radius:2px;overflow:hidden;background:var(--linea)}
+.barra i{display:block;height:100%}
+.leyenda{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;color:var(--mu);margin-top:8px}
+.pto{display:inline-block;width:10px;height:10px;margin-right:5px;border-radius:2px}
+.txt{border-top:1px solid var(--linea);margin-top:28px;padding-top:22px}
+.txt p,.txt li{color:#334155;max-width:70ch}
+.tabla{max-height:340px;overflow:auto;border:1px solid var(--linea);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:520px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--linea)}
+tbody tr:nth-child(even){background:#f8fafc}
+th{position:sticky;top:0;background:#e9edf3}
+th:first-child,td:first-child{text-align:center}
+code{background:#e9edf3;padding:2px 6px;border-radius:4px}
+details{border-bottom:1px solid var(--linea);padding:12px 0;max-width:70ch}
+summary{cursor:pointer;font-weight:600}
+details p{margin:8px 0 0}
+footer{text-align:center;color:var(--mu);font-size:.84rem;padding:8px 16px 30px;max-width:70ch;margin:0 auto}
+.marca{margin-bottom:12px}
+.menu{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.menu a{color:#cbd5e1;text-decoration:none;padding:6px 14px;border:1px solid #3b4a6b;border-radius:999px;font-size:.9rem}
+.menu a:hover{border-color:#fff;color:#fff}
+.menu a[aria-current=page]{background:#fff;color:var(--ink);border-color:#fff;font-weight:600}
+.rp{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.7rem;color:var(--verde);font-variant-numeric:tabular-nums;margin-top:14px;overflow-wrap:anywhere}
+.tools{display:grid;gap:14px}
+@media(min-width:700px){.tools{grid-template-columns:1fr 1fr}}
+a.tool{display:block;background:#fff;border:1px solid var(--linea);border-left:4px solid var(--verde);border-radius:8px;padding:18px;text-decoration:none;color:var(--ink)}
+a.tool:hover{border-left-color:var(--ambar)}
+a.tool h2{margin:0 0 6px}
+a.tool p{margin:0;color:var(--mu)}
+</style>
+</head>
+<body>
+<header class="cab"><div class="in">
+  <div class="marca">CalcuPlata</div>
+  <nav class="menu" aria-label="Herramientas"><a href="calculadora-prestamos.html">Préstamos</a><a href="calculadora-ahorro.html">Ahorro</a><a href="interes-compuesto.html">Interés compuesto</a><a href="calculadora-porcentajes.html">Porcentajes</a></nav>
+  <h1>Calculadoras de dinero, gratis y fáciles</h1>
+  <p>Calcula tu préstamo, tu ahorro y tus porcentajes en segundos. Sin registro y sin guardar tus datos.</p>
+</div></header>
+<main class="cont">
+  <div class="tools">
+    <a class="tool" href="calculadora-prestamos.html"><h2>Calculadora de préstamos</h2><p>Calcula tu cuota mensual y cuánto pagas de intereses.</p></a>
+    <a class="tool" href="calculadora-ahorro.html"><h2>Calculadora de ahorro</h2><p>Descubre cuánto guardar cada mes para llegar a tu meta.</p></a>
+    <a class="tool" href="interes-compuesto.html"><h2>Interés compuesto</h2><p>Mira cuánto crece tu dinero con el paso del tiempo.</p></a>
+    <a class="tool" href="calculadora-porcentajes.html"><h2>Calculadora de porcentajes</h2><p>Descuentos, aumentos y porcentajes al instante.</p></a>
+  </div>
+  <section class="txt">
+    <h2>Para qué sirve CalcuPlata</h2>
+    <p>Antes de pedir un crédito, empezar a ahorrar o comprar algo en cuotas, conviene saber los números. Aquí escribes tus datos y ves el resultado al instante, con una explicación de cómo se calcula cada cosa.</p>
+    <p>Todo el cálculo se hace en tu navegador. No pedimos registro y no guardamos lo que escribes.</p>
+  </section>
+  <section class="txt">
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Las calculadoras son gratis?</summary><p>Sí, puedes usarlas todas las veces que quieras sin pagar ni crear una cuenta.</p></details>
+    <details><summary>¿Los resultados son exactos?</summary><p>Son estimados que suponen cuotas fijas y tasas constantes. Tu banco puede incluir seguros, comisiones u otras condiciones, así que confirma el costo total antes de decidir.</p></details>
+  </section>
+  <!-- ESPACIO PARA PUBLICIDAD: pega aquí el código de anuncio de tu red de anuncios (por ejemplo Google AdSense) -->
+  <div id="espacio-publicidad" style="margin-top:18px"></div>
+</main>
+<footer>Los resultados son estimados con fines informativos y no constituyen asesoría financiera ni una recomendación de inversión. © CalcuPlata</footer>
+</body>
+</html>

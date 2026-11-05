@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de porcentajes: descuentos, aumentos y más | CalcuPlata</title>
+<meta name="description" content="Calcula porcentajes gratis: el porcentaje de un número, descuentos, aumentos y variaciones. Sin registro y sin guardar tus datos.">
+<style>
+:root{--ink:#14213d;--verde:#1a7f5a;--ambar:#e8a33d;--papel:#f3f5f8;--linea:#d9dee7;--mu:#5b6578}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--papel);color:var(--ink);line-height:1.55}
+.cab{background:var(--ink);color:#fff;padding:20px 16px 30px}
+.cab .in,.cont{max-width:980px;margin:0 auto}
+.marca{font-weight:700;opacity:.9;margin-bottom:20px}
+h1{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:2rem;line-height:1.15;margin:0 0 8px}
+.cab p{margin:0;max-width:520px;color:#cbd5e1}
+.cont{padding:20px 16px 24px}
+.grid{display:grid;gap:20px}
+@media(min-width:840px){.grid{grid-template-columns:1fr 1.15fr;align-items:start}}
+.datos,.res{background:#fff;border:1px solid var(--linea);border-radius:8px;padding:20px}
+.res{border-top:4px solid var(--verde)}
+h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.25rem;margin:0 0 10px}
+label{display:block;font-size:.88rem;font-weight:600;margin:16px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #b8c0cf;border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--ambar);outline-offset:1px}
+.mon{display:grid;grid-template-columns:84px 1fr;gap:10px}
+.dos{display:grid;grid-template-columns:1.4fr 1fr;gap:10px}
+#error{color:#8a1c1c;background:#fdecec;border-left:4px solid #c0392b;padding:10px 12px;margin-top:14px;border-radius:4px}
+.nota{font-size:.84rem;color:var(--mu);margin:14px 0 0}
+.etq{font-size:.9rem;color:var(--mu)}
+.cuota{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:2.7rem;line-height:1.1;color:var(--verde);font-variant-numeric:tabular-nums;margin:2px 0 18px;overflow-wrap:anywhere}
+dl{margin:0 0 16px}
+.fila{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--linea)}
+.fila dt{color:var(--mu)}
+.fila dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+.barra{display:flex;height:12px;border-radius:2px;overflow:hidden;background:var(--linea)}
+.barra i{display:block;height:100%}
+.leyenda{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;color:var(--mu);margin-top:8px}
+.pto{display:inline-block;width:10px;height:10px;margin-right:5px;border-radius:2px}
+.txt{border-top:1px solid var(--linea);margin-top:28px;padding-top:22px}
+.txt p,.txt li{color:#334155;max-width:70ch}
+.tabla{max-height:340px;overflow:auto;border:1px solid var(--linea);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:520px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--linea)}
+tbody tr:nth-child(even){background:#f8fafc}
+th{position:sticky;top:0;background:#e9edf3}
+th:first-child,td:first-child{text-align:center}
+code{background:#e9edf3;padding:2px 6px;border-radius:4px}
+details{border-bottom:1px solid var(--linea);padding:12px 0;max-width:70ch}
+summary{cursor:pointer;font-weight:600}
+details p{margin:8px 0 0}
+footer{text-align:center;color:var(--mu);font-size:.84rem;padding:8px 16px 30px;max-width:70ch;margin:0 auto}
+.marca{margin-bottom:12px}
+.menu{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.menu a{color:#cbd5e1;text-decoration:none;padding:6px 14px;border:1px solid #3b4a6b;border-radius:999px;font-size:.9rem}
+.menu a:hover{border-color:#fff;color:#fff}
+.menu a[aria-current=page]{background:#fff;color:var(--ink);border-color:#fff;font-weight:600}
+.rp{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.7rem;color:var(--verde);font-variant-numeric:tabular-nums;margin-top:14px;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<header class="cab"><div class="in">
+  <div class="marca"><a href="index.html" style="color:inherit;text-decoration:none">CalcuPlata</a></div>
+  <nav class="menu" aria-label="Herramientas"><a href="calculadora-prestamos.html">Préstamos</a><a href="calculadora-ahorro.html">Ahorro</a><a href="interes-compuesto.html">Interés compuesto</a><a href="calculadora-porcentajes.html" aria-current="page">Porcentajes</a></nav>
+  <h1>Calculadora de porcentajes</h1>
+  <p>Descuentos, aumentos y porcentajes de cualquier número, al instante.</p>
+</div></header>
+<main class="cont">
+  <div class="grid">
+    <section class="datos">
+      <h2>¿Cuánto es un porcentaje de un número?</h2>
+      <label for="a1">Porcentaje (%)</label>
+      <input id="a1" type="number" inputmode="decimal" step="any" value="15">
+      <label for="b1">De este número</label>
+      <input id="b1" type="number" inputmode="decimal" step="any" value="200">
+      <div class="rp" id="r1" aria-live="polite">–</div>
+    </section>
+    <section class="datos">
+      <h2>¿Qué porcentaje es un número de otro?</h2>
+      <label for="a2">Este número</label>
+      <input id="a2" type="number" inputmode="decimal" step="any" value="30">
+      <label for="b2">Es qué porcentaje de</label>
+      <input id="b2" type="number" inputmode="decimal" step="any" value="200">
+      <div class="rp" id="r2" aria-live="polite">–</div>
+    </section>
+    <section class="datos">
+      <h2>Precio con descuento</h2>
+      <label for="a3">Precio original</label>
+      <input id="a3" type="number" inputmode="decimal" step="any" value="100">
+      <label for="b3">Descuento (%)</label>
+      <input id="b3" type="number" inputmode="decimal" step="any" value="20">
+      <div class="rp" id="r3" aria-live="polite">–</div>
+      <p class="nota" id="n3"></p>
+    </section>
+    <section class="datos">
+      <h2>Aumento o disminución</h2>
+      <label for="a4">Valor inicial</label>
+      <input id="a4" type="number" inputmode="decimal" step="any" value="80">
+      <label for="b4">Valor final</label>
+      <input id="b4" type="number" inputmode="decimal" step="any" value="100">
+      <div class="rp" id="r4" aria-live="polite">–</div>
+      <p class="nota" id="n4"></p>
+    </section>
+  </div>
+  <section class="txt">
+    <h2>Cómo se calculan los porcentajes</h2>
+    <p>Un porcentaje es una parte de cada 100. Estas son las cuentas que hace la página:</p>
+    <p><b>Porcentaje de un número:</b> <code>porcentaje ÷ 100 × número</code>. Por ejemplo, el 15% de 200 es 30.</p>
+    <p><b>Qué porcentaje es uno de otro:</b> <code>número ÷ total × 100</code>. 30 es el 15% de 200.</p>
+    <p><b>Descuento:</b> <code>precio × (1 − descuento ÷ 100)</code>. Un 20% de descuento sobre 100 deja el precio en 80.</p>
+    <p><b>Variación:</b> <code>(final − inicial) ÷ inicial × 100</code>. De 80 a 100 es un aumento del 25%.</p>
+  </section>
+  <section class="txt">
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Cómo saco el 10% de cabeza?</summary><p>Mueve la coma una casilla a la izquierda. El 10% de 450 es 45. Y el 1% se saca moviéndola dos casillas.</p></details>
+    <details><summary>¿Un aumento del 20% y luego una baja del 20% me deja igual?</summary><p>No. Si 100 sube un 20% llega a 120, y bajar un 20% de 120 deja 96. El segundo porcentaje se calcula sobre un número distinto.</p></details>
+  </section>
+</main>
+<footer>Los cálculos se hacen en tu navegador y no se guarda ningún dato. © CalcuPlata</footer>
+<script>
+function $(i){return document.getElementById(i);}
+function num(i){var v=parseFloat($(i).value);return isFinite(v)?v:NaN;}
+function nf(x){return x.toLocaleString('es',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function mf(x){var m=$('moneda'),s=m?m.value.trim():'';return (s?s+' ':'')+nf(x);}
+function meses(){return Math.round($('unidad').value==='anios'?num('plazo')*12:num('plazo'));}
+function mostrar(id,v){$(id).textContent=v;}
+function calcular(){
+  var a=num('a1'),b=num('b1');
+  mostrar('r1',(isNaN(a)||isNaN(b))?'–':nf(a/100*b));
+  a=num('a2');b=num('b2');
+  mostrar('r2',(isNaN(a)||isNaN(b)||b===0)?'–':nf(a/b*100)+' %');
+  a=num('a3');b=num('b3');
+  if(isNaN(a)||isNaN(b)){mostrar('r3','–');$('n3').textContent='';}
+  else{var f=a*(1-b/100);mostrar('r3',nf(f));$('n3').textContent='Te ahorras '+nf(a-f)+'.';}
+  a=num('a4');b=num('b4');
+  if(isNaN(a)||isNaN(b)||a===0){mostrar('r4','–');$('n4').textContent='';}
+  else{var v=(b-a)/a*100;mostrar('r4',(v>0?'+':'')+nf(v)+' %');$('n4').textContent=v>0?'Es un aumento del '+nf(v)+' %.':(v<0?'Es una disminución del '+nf(-v)+' %.':'No hubo cambio.');}
+}
+['a1','b1','a2','b2','a3','b3','a4','b4'].forEach(function(i){$(i).addEventListener('input',calcular);});
+calcular();
+</script>
+</body>
+</html>
